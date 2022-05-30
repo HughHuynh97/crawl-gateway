@@ -33,24 +33,31 @@ public class CrawlScheduler {
     @Scheduled(cron = "0 0 0 * * ?")
     private void runDaily() {
         var targetDate = simpleDateFormat.format(new Date());
-        crawlQueueDao.insertQueueByTargetDate(targetDate);
+        crawlQueueDao.addByTargetDate(targetDate);
     }
 
     @Scheduled(fixedDelay = 60 * 1000)
-    public void crawlRootCategory() {
+    public void crawlCategory() {
         var listQueue = crawlQueueDao.getByStatus(NEW);
         for (CrawlQueue queue : listQueue) {
-            try {
-                crawlQueueDao.updateByStatus(queue, IN_PROGRESS);
-                String url = crawlRequestDao.getRequestUrlByCode(GET_HOME_CATEGORY);
-                var response = restTemplate.getForEntity(url, String.class);
-                categoryCrawlerService.doCrawlCategory(queue, response.getBody());
-            } catch (Exception exception) {
-                log.log(Level.WARNING, "CrawlScheduler >> crawlProduct >> ", exception);
-                queue.setCause(exception.getMessage());
-                crawlQueueDao.updateByStatus(queue, FAILED);
-            }
+            executorService.execute(() -> {
+                try {
+                    crawlQueueDao.updateByStatus(queue, IN_PROGRESS);
+                    String url = crawlRequestDao.getRequestUrlByCode(GET_ALL_CATEGORY);
+                    var response = restTemplate.getForEntity(url, String.class);
+                    categoryCrawlerService.doCrawlCategory(response.getBody(), queue);
+                    crawlQueueDao.updateByStatus(queue, DONE);
+                } catch (Exception exception) {
+                    log.log(Level.WARNING, "CrawlScheduler >> crawlProduct >> ", exception);
+                    queue.setCause(exception.getMessage());
+                    crawlQueueDao.updateByStatus(queue, FAILED);
+                }
+            });
         }
     }
 
+    @Scheduled(fixedDelay = 60 * 3 * 1000)
+    public void crawlProduct() {
+
+    }
 }

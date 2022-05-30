@@ -16,7 +16,12 @@ public class CategoryDao {
     @Autowired
     private JdbcTemplate jdbc;
 
-    public void add(List<CategoryResponse.CategoryList> list) {
+    public void add(CategoryResponse.CategoryItem item) {
+        var param = new Object[] {item.getCatId(), item.getName(), item.getDisplayName(), item.getImage(), item.getLevel(), item.getParentCatId()};
+        jdbc.update(INSERT_CATEGORY, param);
+    }
+
+    public void add(List<CategoryResponse.CategoryItem> list) {
         var params = list.stream().map(item -> new Object[] {
                 item.getCatId(), item.getName(), item.getDisplayName(), item.getImage(), item.getLevel(), item.getParentCatId()
         }).collect(Collectors.toList());

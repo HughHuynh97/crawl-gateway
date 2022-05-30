@@ -1,50 +1,54 @@
 package com.product.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class CategoryResponse {
     @JsonProperty("data")
-    public Data data;
+    private Data data;
     @JsonProperty("error")
-    public int error;
+    private int error;
     @JsonProperty("error_msg")
-    public String errorMsg;
+    private String errorMsg;
 
     @lombok.Data
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class Data {
         @JsonProperty("category_list")
-        public ArrayList<CategoryList> categoryLists;
+        private ArrayList<CategoryItem> categoryLists;
     }
 
     @lombok.Data
-    public static class CategoryList {
+    public static class CategoryItem {
         @JsonProperty("catid")
-        public int catId;
+        private Long catId;
         @JsonProperty("parent_catid")
-        public int parentCatId;
+        private Long parentCatId;
         @JsonProperty("name")
-        public String name;
+        private String name;
         @JsonProperty("display_name")
-        public String displayName;
+        private String displayName;
         @JsonProperty("image")
-        public String image;
+        private String image;
         @JsonProperty("unselected_image")
-        public String unselectedImage;
+        private String unselectedImage;
         @JsonProperty("selected_image")
-        public String selectedImage;
+        private String selectedImage;
         @JsonProperty("level")
-        public int level;
+        private int level;
         @JsonProperty("children")
-        public Object children;
+        private List<CategoryItem> children;
         @JsonProperty("block_buyer_platform")
-        public ArrayList<Integer> blockBuyerPlatform;
+        private ArrayList<Integer> blockBuyerPlatform;
     }
 }

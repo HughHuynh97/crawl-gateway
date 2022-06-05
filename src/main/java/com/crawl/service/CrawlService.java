@@ -1,9 +1,9 @@
-package com.product.service;
+package com.crawl.service;
 
-import com.product.dao.CrawlDao;
-import com.product.model.CategoryResponse;
-import com.product.model.ProductResponse;
-import com.product.utils.HttpUtil;
+import com.crawl.dao.CrawlDao;
+import com.crawl.model.CategoryResponse;
+import com.crawl.model.ProductResponse;
+import com.crawl.utils.HttpUtil;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,6 +1,6 @@
-package com.product.dao;
+package com.crawl.dao;
 
-import com.product.model.CategoryResponse;
+import com.crawl.model.CategoryResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.product.utils.Constant.INSERT_CATEGORY;
+import static com.crawl.utils.Constant.INSERT_CATEGORY;
 
 @Service
 public class CrawlDao {

@@ -8,7 +8,7 @@
         <version>3.0.0-SNAPSHOT</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.product</groupId>
+    <groupId>com.crawl</groupId>
     <artifactId>crawl-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>crawl-service</name>

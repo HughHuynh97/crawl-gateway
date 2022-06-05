@@ -1,4 +1,4 @@
-package com.product.service;
+package com.crawl.service;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationFeature;

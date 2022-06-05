@@ -1,4 +1,4 @@
-package com.product.model;
+package com.crawl.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;

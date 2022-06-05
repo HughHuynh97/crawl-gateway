@@ -1,10 +1,10 @@
-package com.product.dao;
+package com.crawl.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
-import static com.product.utils.Constant.*;
+import static com.crawl.utils.Constant.*;
 
 @Service
 public class CrawlRequestDao {

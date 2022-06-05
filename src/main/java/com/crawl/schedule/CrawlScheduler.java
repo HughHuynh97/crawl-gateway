@@ -1,10 +1,10 @@
-package com.product.schedule;
+package com.crawl.schedule;
 
-import com.product.dao.CrawlQueueDao;
-import com.product.dao.CrawlRequestDao;
-import com.product.model.CrawlQueue;
-import com.product.service.CrawlService;
-import com.product.utils.HttpUtil;
+import com.crawl.dao.CrawlQueueDao;
+import com.crawl.dao.CrawlRequestDao;
+import com.crawl.model.CrawlQueue;
+import com.crawl.service.CrawlService;
+import com.crawl.utils.HttpUtil;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.logging.Level;
 
-import static com.product.utils.Constant.*;
+import static com.crawl.utils.Constant.*;
 
 @Service
 @Log

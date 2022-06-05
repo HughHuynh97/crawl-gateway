@@ -1,6 +1,4 @@
-package com.product.utils;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
+package com.crawl.utils;
 
 import java.text.SimpleDateFormat;
 import java.util.concurrent.ExecutorService;

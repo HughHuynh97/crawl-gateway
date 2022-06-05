@@ -1,4 +1,4 @@
-package com.product.model;
+package com.crawl.model;
 
 import lombok.Data;
 

@@ -1,4 +1,4 @@
-package com.product.utils;
+package com.crawl.utils;
 
 import lombok.SneakyThrows;
 import lombok.extern.java.Log;
@@ -25,7 +25,6 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
 import javax.net.ssl.SSLContext;
-import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;

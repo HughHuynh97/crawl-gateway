@@ -1,6 +1,5 @@
 package com.product.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,23 +11,21 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class CategoryResponse {
     @JsonProperty("data")
-    private Data data;
+    private CategoryList data;
     @JsonProperty("error")
     private int error;
     @JsonProperty("error_msg")
     private String errorMsg;
 
-    @lombok.Data
-    @JsonIgnoreProperties(ignoreUnknown = true)
-    public static class Data {
+    @Data
+    public static class CategoryList {
         @JsonProperty("category_list")
         private ArrayList<CategoryItem> categoryLists;
     }
 
-    @lombok.Data
+    @Data
     public static class CategoryItem {
         @JsonProperty("catid")
         private Long catId;

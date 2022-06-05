@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 import static com.product.utils.Constant.INSERT_CATEGORY;
 
 @Service
-public class CategoryDao {
+public class CrawlDao {
 
     @Autowired
     private JdbcTemplate jdbc;

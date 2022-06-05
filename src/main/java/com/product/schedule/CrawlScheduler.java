@@ -1,9 +1,10 @@
-package com.product.scheuler;
+package com.product.schedule;
 
 import com.product.dao.CrawlQueueDao;
 import com.product.dao.CrawlRequestDao;
 import com.product.model.CrawlQueue;
-import com.product.service.CategoryCrawlerService;
+import com.product.service.CrawlService;
+import com.product.utils.HttpUtil;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ import static com.product.utils.Constant.*;
 @Log
 public class CrawlScheduler {
     @Autowired
-    private CategoryCrawlerService categoryCrawlerService;
+    private CrawlService crawlService;
     @Autowired
     private CrawlQueueDao crawlQueueDao;
     @Autowired
@@ -33,7 +34,7 @@ public class CrawlScheduler {
     @Scheduled(cron = "0 0 0 * * ?")
     private void runDaily() {
         var targetDate = simpleDateFormat.format(new Date());
-        crawlQueueDao.addByTargetDate(targetDate);
+        crawlQueueDao.addByTargetDate("2022-05-01", targetDate);
     }
 
     @Scheduled(fixedDelay = 60 * 1000)
@@ -43,9 +44,8 @@ public class CrawlScheduler {
             executorService.execute(() -> {
                 try {
                     crawlQueueDao.updateByStatus(queue, IN_PROGRESS);
-                    String url = crawlRequestDao.getRequestUrlByCode(GET_ALL_CATEGORY);
-                    var response = restTemplate.getForEntity(url, String.class);
-                    categoryCrawlerService.doCrawlCategory(response.getBody(), queue);
+                    var response = HttpUtil.get(crawlRequestDao.getRequestUrlByCode(GET_ALL_CATEGORY));
+                    crawlService.doCrawlCategory(response);
                     crawlQueueDao.updateByStatus(queue, DONE);
                 } catch (Exception exception) {
                     log.log(Level.WARNING, "CrawlScheduler >> crawlProduct >> ", exception);

@@ -6,9 +6,8 @@ import java.util.concurrent.Executors;
 
 public final class Constant {
 
-    public static ExecutorService executorService = Executors.newCachedThreadPool();
+    public static final ExecutorService executorService = Executors.newCachedThreadPool();
     public static final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    ;
     public static final String NEW = "NEW";
     public static final String IN_PROGRESS = "IN_PROGRESS";
     public static final String DONE = "DONE";

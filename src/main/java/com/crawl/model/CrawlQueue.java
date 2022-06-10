@@ -20,6 +20,7 @@ public class CrawlQueue {
         this.cause = rs.getString("cause");
         this.cause = rs.getString("cause");
         this.cause = rs.getString("cause");
+        this.cause = rs.getString("cause");
         this.status = rs.getString("status");
     }
 }

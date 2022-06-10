@@ -8,7 +8,10 @@ public final class Constant {
     private Constant() {}
 
     public static final ExecutorService executorService = Executors.newCachedThreadPool();
-    public static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
+    public static SimpleDateFormat getDateFormat() {
+        return new SimpleDateFormat("yyyy-MM-dd");
+    }
+
     public static final String NEW = "NEW";
     public static final String IN_PROGRESS = "IN_PROGRESS";
     public static final String DONE = "DONE";

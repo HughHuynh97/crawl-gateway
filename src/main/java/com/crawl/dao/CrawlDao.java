@@ -6,7 +6,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static com.crawl.utils.Constant.INSERT_CATEGORY;
 
@@ -22,9 +21,7 @@ public class CrawlDao {
     }
 
     public void add(List<CategoryResponse.CategoryItem> list) {
-        var params = list.stream().map(item -> new Object[] {
-                item.getCatId(), item.getName(), item.getDisplayName(), item.getImage(), item.getLevel(), item.getParentCatId()
-        }).collect(Collectors.toList());
+        var params = list.stream().map(item -> new Object[] {item.getCatId(), item.getName(), item.getDisplayName(), item.getImage(), item.getLevel(), item.getParentCatId()}).toList();
         jdbc.batchUpdate(INSERT_CATEGORY, params);
     }
 }

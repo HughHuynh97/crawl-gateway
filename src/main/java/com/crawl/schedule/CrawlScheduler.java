@@ -33,7 +33,7 @@ public class CrawlScheduler {
 
     @Scheduled(cron = "0 0 0 * * ?")
     private void runDaily() {
-        var targetDate = SIMPLE_DATE_FORMAT.format(new Date());
+        var targetDate = getDateFormat().format(new Date());
         crawlQueueDao.addByTargetDate("2022-05-01", targetDate);
     }
 

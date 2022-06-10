@@ -18,6 +18,8 @@ public class CrawlQueue {
         this.startDate = rs.getString("start_date");
         this.endDate = rs.getString("end_date");
         this.cause = rs.getString("cause");
+        this.cause = rs.getString("cause");
+        this.cause = rs.getString("cause");
         this.status = rs.getString("status");
     }
 }

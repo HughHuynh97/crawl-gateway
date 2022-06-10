@@ -1,5 +1,8 @@
 app="crawl-service"
 username="trivip002"
+docker network prune
+docker create network spring-net
+docker network connect spring-net mysqldb
 echo Pull Image
 docker stop "$app" && docker rm -f "$app"
 docker pull "$username"/"$app":latest

@@ -12,7 +12,7 @@ Before you continue, ensure you meet the following requirements:
 ## Step 3: Run mysql container ##
     docker run -p 3307:3306 --name mysqldb -e MYSQL_ROOT_PASSWORD=tripro123  -e MYSQL_DATABASE=dev mysql:8
 ## Step 4: create a network ##
-    docker create network spring-net
+    docker network create spring-net
 ## Step 5: link network with mysql ##
     docker network connect spring-net mysqldb
 ## Step 6: Run Docker Container ##

@@ -34,12 +34,14 @@ import java.util.logging.Level;
 
 @Log
 public final class HttpUtil {
-    final static PoolingHttpClientConnectionManager CONNECTION_MANAGER;
-    final static CloseableHttpClient CLIENT;
+    private HttpUtil() {}
+    private static final PoolingHttpClientConnectionManager CONNECTION_MANAGER;
+    private static final CloseableHttpClient CLIENT;
     private static final int MAX_PER_ROUTE = 200;
     private static final int MAX_TOTAL = 200;
     private static final int VALIDATE_AFTER_INACTIVITY = 1000;
     private static final int CONNECTION_TIMEOUT = 30000;
+    private static final String ACCEPT = "Accept";
 
     static {
         LayeredConnectionSocketFactory ssl = null;
@@ -74,7 +76,7 @@ public final class HttpUtil {
     @SneakyThrows
     public static String get(String url) {
         HttpUriRequest request = new HttpGet(url);
-        request.addHeader("Accept", " application/json");
+        request.addHeader(ACCEPT, " application/json");
         request.addHeader("Accept-Encoding", "gzip, deflate");
         var response = CLIENT.execute(request);
         HttpEntity entity = response.getEntity();
@@ -106,7 +108,7 @@ public final class HttpUtil {
             }
         }
         request.addHeader("Authorization", "");
-        request.addHeader("Accept", " application/json");
+        request.addHeader(ACCEPT, " application/json");
         request.addHeader("Accept-Encoding", "gzip, deflate");
         response = CLIENT.execute(request);
         HttpEntity entity = response.getEntity();
@@ -130,7 +132,7 @@ public final class HttpUtil {
         }
         HttpPost httpPost = new HttpPost(url);
         httpPost.addHeader("Authorization", "");
-        httpPost.addHeader("Accept", " application/json");
+        httpPost.addHeader(ACCEPT, " application/json");
         httpPost.setHeader("Content-type", "application/json");
         for (Map.Entry<String, String> i : headers.entrySet()) {
             httpPost.addHeader(i.getKey(), i.getValue());

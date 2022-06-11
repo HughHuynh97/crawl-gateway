@@ -2,7 +2,7 @@ app="database"
 app2="crawl-service"
 username="trivip002"
 
-if [[ -n "$( docker network -q spring-net )" ]]; then
+if [[ -n "$( docker container -q mysqldb )" ]]; then
   echo "MYSQL Container exists"
 else
   docker create -p 3307:3306 --name mysqldb -e MYSQL_ROOT_PASSWORD=tripro123  -e MYSQL_DATABASE=dev mysql:8.0.29
@@ -17,11 +17,5 @@ docker create -p 8081:8081 --name "$app" --net spring-net -e MYSQL_HOST=mysqldb 
 docker create -p 8080:8080 --name "$app2" --net spring-net -e MYSQL_HOST=mysqldb -e MYSQL_USERNAME=root -e MYSQL_PASSWORD=tripro123 -e MYSQL_PORT=3306 -e MYSQL_DATABASE=dev "$username"/"$app2"
 docker network connect spring-net mysqldb
 docker container start mysqldb
-sleep 6
-echo Begin Start Module "$app"
-docker container start "$app"
-sleep 6
-echo Begin Start Module "$app2"
-docker container start "$app2"
 
 echo Deploy Done !

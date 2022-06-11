@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("internal/api")
 public class InternalController {
-
     @GetMapping("network")
     public String network(){
         return "Connect Successful !";

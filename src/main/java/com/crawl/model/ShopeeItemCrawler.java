@@ -6,7 +6,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class ProductResponse {
+public class ShopeeItemCrawler {
 
     private List<Product> items;
 
@@ -16,5 +16,13 @@ public class ProductResponse {
         private Long productId;
         @JsonProperty("shopid")
         private Long shopId;
+        @JsonProperty("item_basic")
+        private ItemBasic itemBasic;
+    }
+
+    @Data
+    public static class ItemBasic {
+        @JsonProperty("currency")
+        private String currency;
     }
 }

@@ -42,6 +42,7 @@ public final class HttpUtil {
     private static final int VALIDATE_AFTER_INACTIVITY = 1000;
     private static final int CONNECTION_TIMEOUT = 30000;
     private static final String ACCEPT = "Accept";
+    private static final String UTF8 = "";
 
     static {
         LayeredConnectionSocketFactory ssl = null;
@@ -76,7 +77,7 @@ public final class HttpUtil {
     @SneakyThrows
     public static String get(String url) {
         HttpUriRequest request = new HttpGet(url);
-        request.addHeader(ACCEPT, " application/json");
+        request.addHeader(ACCEPT, "application/json");
         request.addHeader("Accept-Encoding", "gzip, deflate");
         var response = CLIENT.execute(request);
         HttpEntity entity = response.getEntity();

@@ -11,7 +11,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CategoryResponse {
+public class ShopeeCategoryCrawler {
     @JsonProperty("data")
     private CategoryList data;
     @JsonProperty("error")

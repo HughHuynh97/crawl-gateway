@@ -6,7 +6,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class ProductDetailResponse {
+public class ShopeeItemDetailCrawler {
     @JsonProperty("error_msg")
     private String errorMsg;
     private Detail data;
@@ -40,16 +40,23 @@ public class ProductDetailResponse {
         @JsonProperty("shop_location")
         private String shopLocation;
         @JsonProperty("ctime")
-        private Long ctime;
+        private String ctime;
         @JsonProperty("discount")
         private String discount;
         @JsonProperty("stock")
         private Long stock;
-        @JsonProperty("catid")
-        private Long catId;
+        @JsonProperty("categories")
+        private List<Category> categories;
+        @JsonProperty("description")
+        private String description;
         @JsonProperty("item_status")
         private String itemStatus;
         @JsonProperty("status")
         private Integer status;
+    }
+
+    public static class Category {
+        @JsonProperty("cat_id")
+        private Long catId;
     }
 }

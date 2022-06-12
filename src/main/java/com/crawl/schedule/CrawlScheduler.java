@@ -36,11 +36,11 @@ public class CrawlScheduler {
 
     @Scheduled(cron = "0 0 0 * * ?")
     private void runDaily() {
-        var request = mapperService.writeValueAsString(Map.of("pageFrom", "1",
-                "pageTo", "1",
+        var request = mapperService.writeValueAsString(Map.of("pageFrom", "6",
+                "pageTo", "7",
                 "catIds", List.of("11036382"),
                 "provider", ShopeeCrawlService.CODE));
-        crawlQueueDao.addByTargetDate(request);
+        //crawlQueueDao.addRequest(request);
     }
 
     @Scheduled(fixedDelay = 60 * 1000)
@@ -58,10 +58,5 @@ public class CrawlScheduler {
                 }
             });
         }
-    }
-
-    @Scheduled(fixedDelay = 60 * 3 * 1000)
-    public void crawlProduct() {
-
     }
 }

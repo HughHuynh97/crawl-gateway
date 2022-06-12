@@ -23,6 +23,10 @@ public class ProductDto {
     private Long stock;
     private String discount;
     private Date ctime;
-    private String status;
+    private Integer status;
     private String provider;
+    private String rating;
+    private Long likeCount;
+    private String attributes;
+    private String sku;
 }

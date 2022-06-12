@@ -3,6 +3,7 @@ package com.crawl.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Data
@@ -53,10 +54,44 @@ public class ShopeeItemDetailCrawler {
         private String itemStatus;
         @JsonProperty("status")
         private Integer status;
+        @JsonProperty("like_count")
+        private Long likeCount;
+        @JsonProperty("item_rating")
+        private ItemRating itemRating;
+        @JsonProperty("attributes")
+        private List<Attribute> attributes;
+        @JsonProperty("tier_variations")
+        private List<Sku> sku;
+    }
+    @Data
+    public static class ItemRating {
+        @JsonProperty("rating_count")
+        private List<Long> ratingCount;
+        @JsonProperty("rating_star")
+        private BigDecimal ratingStar;
     }
 
+    @Data
+    public static class Attribute {
+        @JsonProperty("name")
+        private String name;
+        @JsonProperty("value")
+        private String value;
+    }
+
+    @Data
+    private static class Sku {
+        @JsonProperty("images")
+        private List<String> images;
+        @JsonProperty("name")
+        private String name;
+        @JsonProperty("options")
+        private List<String> options;
+    }
+
+    @Data
     public static class Category {
-        @JsonProperty("cat_id")
+        @JsonProperty("catid")
         private Long catId;
     }
 }

@@ -26,7 +26,7 @@ public class CrawlQueueDao {
         return jdbc.query(GET_CRAWL_QUEUE_BY_STATUS, (rs, i) -> new CrawlQueue(rs), status);
     }
 
-    public void addByTargetDate(String requet) {
+    public void addRequest(String requet) {
         jdbc.update(INSERT_QUEUE_BY_TARGET_DATE, requet);
     }
 

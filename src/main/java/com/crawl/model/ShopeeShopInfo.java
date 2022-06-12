@@ -9,7 +9,7 @@ public class ShopeeShopInfo {
     private Account data;
     @Data
     public static class Account {
-        @JsonProperty("username")
+        @JsonProperty("name")
         private String username;
     }
 }

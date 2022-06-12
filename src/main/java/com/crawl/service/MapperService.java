@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.java.Log;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -27,7 +28,7 @@ public class MapperService {
         } catch (Exception exception) {
             log.log(Level.WARNING, "MapperService > writeValueAsString got exception", exception);
         }
-        return null;
+        return "";
     }
 
     public <T> T readValue(String object, Class<T> clazz) {

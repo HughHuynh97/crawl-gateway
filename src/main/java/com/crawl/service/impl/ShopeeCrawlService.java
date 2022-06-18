@@ -6,9 +6,11 @@ import com.crawl.dao.ProductDao;
 import com.crawl.dao.ShopDao;
 import com.crawl.enums.Status;
 import com.crawl.model.*;
+import com.crawl.model.shopee.*;
 import com.crawl.service.CrawlService;
 import com.crawl.service.MapperService;
 import com.crawl.utils.HttpUtil;
+import jakarta.annotation.PostConstruct;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,13 +43,17 @@ public class ShopeeCrawlService implements CrawlService {
     @Autowired
     private ShopDao shopDao;
 
+    @PostConstruct
+    private void initCategory() {
+        var response = HttpUtil.get(GET_ALL_CATEGORY);
+        var listCategory = mapperService.readValue(response, ShopeeCategoryCrawler.class);
+        insertDB(listCategory.getData().getCategoryLists());
+    }
+
     @Override
     public void doCrawJob(CrawlQueue queue) {
         log.log(Level.INFO, "ShopeeCrawlService >> Start Job System");
         crawlQueueDao.updateByStatus(queue, Status.IN_PROGRESS.getCode());
-        var response = HttpUtil.get(GET_ALL_CATEGORY);
-        var listCategory = mapperService.readValue(response, ShopeeCategoryCrawler.class);
-        insertDB(listCategory.getData().getCategoryLists());
         var request = mapperService.readValue(queue.getRequest(), CrawlRequest.class);
         var rootCats = request.getCatIds() == null || request.getCatIds().isEmpty() ? categoryDao.getCategoryByParentId(0L) : categoryDao.getCategoryById(request.getCatIds());
         rootCats.forEach(i -> handleDb(i, request));
@@ -58,8 +64,7 @@ public class ShopeeCrawlService implements CrawlService {
     private void insertDB(List<ShopeeCategoryCrawler.CategoryItem> categoryItems) {
         categoryItems.forEach(item -> {
             log.log(Level.INFO, "ShopeeCrawlService >> Start Sync Category >> {0}", item.getCatId());
-            var dto = new CategoryDto();
-            dto.setProvider(CODE);
+            var dto = new ShopeeCategoryDto();
             dto.setCatId(item.getCatId());
             dto.setCode(item.getName());
             dto.setName(item.getDisplayName());
@@ -72,7 +77,7 @@ public class ShopeeCrawlService implements CrawlService {
         });
     }
 
-    private void handleDb(CategoryDto category, CrawlRequest request) {
+    private void handleDb(ShopeeCategoryDto category, CrawlRequest request) {
         var limit = 60;
         var newest = (Integer.parseInt(request.getPageFrom()) - 1) * limit;
         var totalItem = Integer.parseInt(request.getPageTo()) * limit;
@@ -85,12 +90,12 @@ public class ShopeeCrawlService implements CrawlService {
 
     private void upsertData(Map<String, String> requestParam) {
         var response = HttpUtil.get(GET_PRODUCT_BY_CAT, requestParam, null);
-        var listProductCrawler = mapperService.readValue(response, ShopeeItemCrawler.class).getItems();
-        for (ShopeeItemCrawler.Product item : listProductCrawler) {
+        var items =  mapperService.readValue(response, ShopeeItemCrawler.class);
+        categoryDao.updateTotalItemByShopeeCatId(items.getTotalCount(), Long.parseLong(requestParam.get("match_id")));
+        for (ShopeeItemCrawler.Product item : items.getItems()) {
             log.log(Level.INFO, "ShopeeCrawlService >> Start Sync Product >> {0}", item.getProductId());
             var product = mapperService.readValue(HttpUtil.get(GET_PRODUCT_DETAIL, Map.of("itemid", item.getProductId().toString(), "shopid", item.getShopId().toString()), null), ShopeeItemDetailCrawler.class);
-            var dto = new ProductDto();
-            dto.setProvider(CODE);
+            var dto = new ShopeeProductDto();
             dto.setProdId(item.getProductId());
             dto.setShopId(item.getShopId());
             dto.setName(product.getData().getName());
@@ -116,9 +121,9 @@ public class ShopeeCrawlService implements CrawlService {
             product.getData().getCategories().forEach(cat -> productDao.mapToCategory(cat.getCatId(), dto.getProdId()));
             productDao.add(dto);
             log.log(Level.INFO, "ShopeeCrawlService >> Start Sync Shop >> {0}", item.getShopId());
-            var shopInfo = mapperService.readValue(HttpUtil.get(GET_SHOP_INFO, Map.of("shopId", String.valueOf(item.getShopId())), null), ShopeeShopInfo.class);
-            var shopDetail = mapperService.readValue(HttpUtil.get(GET_SHOP_DETAIL, Map.of("sort_sold_out", "0", "username", shopInfo.getData().getUsername()), null), ShopeeShopDetail.class);
-            var shopDto = new ShopDto();
+            var shopInfo = mapperService.readValue(HttpUtil.get(GET_SHOP_INFO, Map.of("shopId", String.valueOf(item.getShopId())), null), ShopeeShopInfoCrawler.class);
+            var shopDetail = mapperService.readValue(HttpUtil.get(GET_SHOP_DETAIL, Map.of("sort_sold_out", "0", "username", shopInfo.getData().getUsername()), null), ShopeeShopDetailCrawler.class);
+            var shopDto = new ShopeeShopDto();
             if (shopDetail.getData() != null) {
                 shopDto.setShopId(shopDetail.getData().getShopId());
                 shopDto.setUserId(shopDetail.getData().getAccount().getUserId());
@@ -133,10 +138,9 @@ public class ShopeeCrawlService implements CrawlService {
                 shopDto.setRatingBad(shopDetail.getData().getRatingBad());
                 shopDto.setTotalProduct(shopDetail.getData().getTotalProduct());
                 shopDto.setFollower(shopDetail.getData().getFollower());
-                shopDto.setDescription(shopDetail.getData().getDescription());
+                shopDto.setDescription(shopDetail.getData().getDescription() == null ? "" : shopDetail.getData().getDescription());
                 shopDto.setCountry(shopDetail.getData().getCountry());
                 shopDto.setStatus(shopDetail.getData().getStatus());
-                shopDto.setProvider(CODE);
                 shopDao.add(shopDto);
             }
         }

@@ -1,4 +1,4 @@
-package com.crawl.model;
+package com.crawl.model.shopee;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;

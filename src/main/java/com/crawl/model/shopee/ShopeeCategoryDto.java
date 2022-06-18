@@ -1,4 +1,4 @@
-package com.crawl.model;
+package com.crawl.model.shopee;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,17 +10,14 @@ import java.sql.SQLException;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CategoryDto {
+public class ShopeeCategoryDto {
     private Long catId;
     private String name;
-
     private String image;
     private String code;
     private Long parentId;
 
-    private String provider;
-
-    public CategoryDto(ResultSet rs) throws SQLException {
+    public ShopeeCategoryDto(ResultSet rs) throws SQLException {
         this.catId = rs.getLong("cat_id");
         this.code = rs.getString("code");
         this.name = rs.getString("name");

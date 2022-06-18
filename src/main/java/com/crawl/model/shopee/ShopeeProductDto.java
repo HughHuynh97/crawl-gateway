@@ -1,11 +1,11 @@
-package com.crawl.model;
+package com.crawl.model.shopee;
 
 import lombok.Data;
 
 import java.util.Date;
 
 @Data
-public class ProductDto {
+public class ShopeeProductDto {
     private Long prodId;
     private Long shopId;
     private String name;
@@ -24,7 +24,6 @@ public class ProductDto {
     private String discount;
     private Date ctime;
     private Integer status;
-    private String provider;
     private String rating;
     private Long likeCount;
     private String attributes;

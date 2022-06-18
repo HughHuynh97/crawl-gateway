@@ -42,7 +42,7 @@ public final class HttpUtil {
     private static final int VALIDATE_AFTER_INACTIVITY = 1000;
     private static final int CONNECTION_TIMEOUT = 30000;
     private static final String ACCEPT = "Accept";
-    private static final String UTF8 = "";
+    private static final String UTF8 = "UTF-8";
 
     static {
         LayeredConnectionSocketFactory ssl = null;
@@ -83,7 +83,7 @@ public final class HttpUtil {
         HttpEntity entity = response.getEntity();
         String responseString = "";
         if (entity != null) {
-            responseString = EntityUtils.toString(entity, "UTF-8");
+            responseString = EntityUtils.toString(entity, UTF8);
         }
         return responseString;
     }
@@ -115,7 +115,7 @@ public final class HttpUtil {
         HttpEntity entity = response.getEntity();
         String responseString = "";
         if (entity != null) {
-            responseString = EntityUtils.toString(entity, "UTF-8");
+            responseString = EntityUtils.toString(entity, UTF8);
         }
         return responseString;
     }
@@ -125,7 +125,7 @@ public final class HttpUtil {
         StringBuilder requestParams = new StringBuilder();
         if (queryParams != null && !queryParams.isEmpty()) {
             for (Map.Entry<String, String> queryParam : queryParams.entrySet()) {
-                requestParams.append(URLEncoder.encode(queryParam.getKey(), StandardCharsets.UTF_8)).append("=").append(URLEncoder.encode(String.valueOf(queryParam.getValue()), "UTF-8")).append("&");
+                requestParams.append(URLEncoder.encode(queryParam.getKey(), StandardCharsets.UTF_8)).append("=").append(URLEncoder.encode(String.valueOf(queryParam.getValue()), StandardCharsets.UTF_8)).append("&");
             }
         }
         if (requestParams.capacity() > 0) {
@@ -140,6 +140,6 @@ public final class HttpUtil {
         }
         CloseableHttpResponse response = CLIENT.execute(httpPost);
         HttpEntity entity = response.getEntity();
-        return EntityUtils.toString(entity, "UTF-8");
+        return EntityUtils.toString(entity, UTF8);
     }
 }

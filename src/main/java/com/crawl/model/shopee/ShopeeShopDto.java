@@ -1,12 +1,11 @@
-package com.crawl.model;
+package com.crawl.model.shopee;
 
 import lombok.Data;
 
 @Data
-public class ShopDto {
+public class ShopeeShopDto {
     private Long shopId;
     private Long userId;
-    private String provider;
     private String name;
     private String username;
     private String avatar;

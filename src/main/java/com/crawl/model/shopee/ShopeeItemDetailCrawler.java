@@ -1,4 +1,4 @@
-package com.crawl.model;
+package com.crawl.model.shopee;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
@@ -54,7 +54,7 @@ public class ShopeeItemDetailCrawler {
         private String itemStatus;
         @JsonProperty("status")
         private Integer status;
-        @JsonProperty("like_count")
+        @JsonProperty("liked_count")
         private Long likeCount;
         @JsonProperty("item_rating")
         private ItemRating itemRating;

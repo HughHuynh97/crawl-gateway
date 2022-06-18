@@ -3,6 +3,10 @@ server:
   servlet:
     context-path: /crawl-service
 spring:
+  task:
+    scheduling:
+      pool:
+        size: 10
   datasource:
     url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/${MYSQL_DATABASE:dev}?createDatabaseIfNotExist=true
     username: ${MYSQL_USERNAME:root}

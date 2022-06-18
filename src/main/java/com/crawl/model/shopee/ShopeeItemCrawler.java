@@ -1,4 +1,4 @@
-package com.crawl.model;
+package com.crawl.model.shopee;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
@@ -7,8 +7,10 @@ import java.util.List;
 
 @Data
 public class ShopeeItemCrawler {
-
+    @JsonProperty("items")
     private List<Product> items;
+    @JsonProperty("total_count")
+    private Long totalCount;
 
     @Data
     public static class Product {

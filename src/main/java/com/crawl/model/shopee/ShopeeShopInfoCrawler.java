@@ -1,10 +1,10 @@
-package com.crawl.model;
+package com.crawl.model.shopee;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
-public class ShopeeShopInfo {
+public class ShopeeShopInfoCrawler {
     @JsonProperty("data")
     private Account data;
     @Data

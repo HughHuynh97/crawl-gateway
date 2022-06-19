@@ -31,7 +31,7 @@ public class TikiCrawlService implements CrawlService {
     private MapperService mapperService;
     @PostConstruct
     public void initCategory() throws IOException {
-        var jsoup = Jsoup.connect("https://tiki.vn").get();
+        var jsoup = Jsoup.connect("http://tiki.vn").get();
         var footerCatElements = jsoup.select(".styles__StyledColumns-sc-17y817k-2");
         var catLinks = footerCatElements.get(0).select("a");
         for (Element link : catLinks) {
@@ -40,7 +40,7 @@ public class TikiCrawlService implements CrawlService {
             var category = mapperService.readValue(response, TikiHomeCategoryCrawler.class);
             var categoryDto = new TikiCategoryDto();
             if (category.getId() != null) {
-                log.log(Level.INFO, "TikiCrawlService >> Start Sync Category >> {0}", categoryDto.getCatId());
+                log.log(Level.INFO, "TikiCrawlService >> Start Sync Category >> {0}", category.getId());
                 categoryDto.setCatId(category.getId());
                 categoryDto.setName(category.getName());
                 categoryDto.setLevel(category.getLevel());

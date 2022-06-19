@@ -2,21 +2,14 @@ package com.crawl.service.impl;
 
 import com.crawl.dao.CategoryDao;
 import com.crawl.model.CrawlQueue;
-import com.crawl.model.tiki.TikiCategoryDto;
-import com.crawl.model.tiki.TikiHomeCategoryCrawler;
 import com.crawl.service.CrawlService;
 import com.crawl.service.MapperService;
-import com.crawl.utils.HttpUtil;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.java.Log;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Element;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.Map;
-import java.util.logging.Level;
 
 @Service
 @Log
@@ -31,7 +24,7 @@ public class TikiCrawlService implements CrawlService {
     private MapperService mapperService;
     @PostConstruct
     public void initCategory() throws IOException {
-        var jsoup = Jsoup.connect("http://tiki.vn").get();
+        /*var jsoup = Jsoup.connect("http://tiki.vn").get();
         var footerCatElements = jsoup.select(".styles__StyledColumns-sc-17y817k-2");
         var catLinks = footerCatElements.get(0).select("a");
         for (Element link : catLinks) {
@@ -51,7 +44,7 @@ public class TikiCrawlService implements CrawlService {
                 categoryDto.setStatus(categoryDto.getStatus());
                 categoryDao.add(categoryDto);
             }
-        }
+        }*/
     }
     @Override
     public void doCrawJob(CrawlQueue queue) {
